@@ -19,7 +19,8 @@ def analyze_jobs(jobs_data,role, years, current_role, skills):
     """
 
     response = client.models.generate_content(
-        model="gemini-3-flash-preview",
+        # model="gemini-3-flash-preview",
+        model = "gemini-3.5-flash-lite",
         contents=prompt
     )
 

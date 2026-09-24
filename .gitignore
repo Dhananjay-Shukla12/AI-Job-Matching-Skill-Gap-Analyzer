@@ -1,17 +1,52 @@
-# Secrets and Auth
+# # Secrets and Auth
+# auth.json
+# naukri.json
+# state.json
+# .env
+
+# # Python Environment
+# venv/
+# venv1/
+# __pycache__/
+# *.pyc
+
+# # Playwright specific
+# test-results/
+# playwright-report/
+# blob-report/
+# test_sample_linkdin.py
+
+# Secrets and Authentication
 auth.json
 naukri.json
 state.json
 .env
+*.env
 
 # Python Environment
 venv/
 venv1/
+.venv/
 __pycache__/
 *.pyc
 
-# Playwright specific
+# Node.js
+node_modules/
+
+# Playwright
 test-results/
 playwright-report/
 blob-report/
+playwright/.cache/
 test_sample_linkdin.py
+
+# macOS
+.DS_Store
+
+# Python testing/cache
+.pytest_cache/
+
+# Local/temporary files
+*.log
+*.tmp
+

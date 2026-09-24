@@ -40,7 +40,13 @@ st.markdown("Enter a job query to scrape live postings and generate an AI feedba
 
 # User Inputs
 current_role = st.text_input("Current Designation", placeholder="e.g., AI Engineer")
-experience = st.text_input("Experience in current role", placeholder="e.g., 2 year")
+experience = st.number_input(
+    "Experience in current role",
+    min_value=1,
+    max_value=30,
+    value=1,
+    step=1
+)
 current_skills = st.text_area("Your Current Skills", placeholder="e.g., Python, Playwright, Automation Testing")
 job_query = st.text_input("Target Role", placeholder="e.g., Full Stack Developer")
 
@@ -50,27 +56,12 @@ if st.button("Analyze Market"):
         st.warning("Please enter both a query and your skills.")
     else:
         with st.spinner("Initializing Playwright... Scrape in progress..."):
-            live_job_data = all_data(job_query)
+            live_job_data = all_data(job_query,experience)
             result = analyze_jobs(live_job_data,job_query, experience, current_role, current_skills)
             
-            # --- 🚀 YOUR CODE GOES HERE ---
-            # 1. Call your Playwright script here, passing 'job_query'
-            # time.sleep(2) # Fake scraping time
-            # scraped_data = "Simulated scraped job data: Requires Python, Docker, and CI/CD."
-            
-            # # 2. Call Gemini here, passing 'scraped_data' and 'current_skills'
-            # time.sleep(2) # Fake AI thinking time
-            # ai_feedback = f"""Based on your skills ({current_skills}), here is your feedback for '{job_query}':
-            
-            # st.success("Analysis Complete!")
-            
-            # Display the result to the user
-            # st.subheader("AI Feedback")
             st.write(result)
             
-            # ---------------------------------------------------------
-            # 3. THE PDF DOWNLOAD BUTTON
-            # ---------------------------------------------------------
+            
             pdf_bytes = create_pdf(result)
             
             st.download_button(
