@@ -1,19 +1,59 @@
-# Auto Match Engine 
+# AI Job Market & Skill Gap Analyzer
 
-I built the Auto Match Engine over a weekend because manually scrolling through job boards and trying to guess if I actually qualify for a role is exhausting.
+An AI-powered tool that analyzes real job postings and compares their requirements with a candidate's skills, experience, and target role.
 
-I wanted a script that wouldn't just scrape job data, but would actually act as a personal recruiter and tell me: *"Is this job worth applying for based on my exact skills?"*
+I built this project to simplify job-market research. Instead of manually going through multiple job descriptions, the application collects relevant postings, uses AI to analyze them, and provides insights into required skills and areas for improvement.
 
-## What it actually does
-1. **The Scraper:** It uses Playwright to grab live AI Engineer job listings from Naukri. (I originally tried LinkedIn and Indeed, but their Cloudflare bot-protection is a nightmare. Naukri was much better for this). 
-2. **The Brain:** It extracts the raw job titles and descriptions and feeds them directly into the Google Gemini 1.5 API. 
-3. **The Output:** Gemini analyzes the roles against my current resume/skills and prints out a customized recommendation in the terminal telling me which job is the best fit.
+## What It Does
+
+- **Job Scraping:** Uses Playwright to collect job titles and descriptions from Naukri.
+- **AI Analysis:** Uses the Google Gemini API to analyze job requirements.
+- **Skill Gap Insights:** Identifies skills and requirements that may be missing from the candidate's current profile.
+- **Recommendations:** Provides job, skill, and resume-related recommendations.
+- **PDF Report:** Generates a downloadable analysis report through Streamlit.
 
 ## Tech Stack
-- **Python** (Core logic)
-- **Playwright** (Headless browser automation & DOM parsing)
-- **Google Gemini API** (LLM analysis)
 
-## How to run it locally
+**Python · Playwright · Streamlit · Google Gemini API · FPDF · python-dotenv**
 
-If you hate scrolling through job boards too, feel free to clone this and use it.
+## How It Works
+
+```text
+User Input
+    ↓
+Playwright → Naukri Job Listings
+    ↓
+Job Titles & Descriptions
+    ↓
+Google Gemini
+    ↓
+Job & Skill Analysis
+    ↓
+Recommendations
+    ↓
+PDF Report
+```
+
+## Run Locally
+
+```bash
+git clone <repository-url>
+cd ai-job-market-skill-gap-analyzer
+
+pip install -r requirements.txt
+playwright install
+```
+
+Create a `.env` file:
+
+```env
+GEMINI_API_KEY=your_api_key_here
+```
+
+Then run:
+
+```bash
+streamlit run app.py
+```
+
+> **Note:** Keep `.env` and `naukri.json` out of version control by adding them to `.gitignore`.
