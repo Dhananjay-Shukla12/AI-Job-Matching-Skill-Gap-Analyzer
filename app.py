@@ -6,29 +6,69 @@ from ai import analyze_jobs
 # ---------------------------------------------------------
 # 1. THE PDF GENERATOR
 # ---------------------------------------------------------
+# def clean_text(text):
+#     return text.replace("—", "-").replace("’", "'")
+# def create_pdf(feedback_text):
+#     clean = clean_text(feedback_text)
+#     pdf = FPDF()
+#     pdf.add_page()
+#     pdf.set_font("Arial", size=12)
+
+#     pdf_bytes = pdf.output(dest='S').encode('latin-1', errors='replace')
+    
+#     # Add Title
+#     pdf.set_font("Arial", 'B', 16)
+#     pdf.cell(200, 10, txt="Job Market Analysis Report", ln=True, align='C')
+#     pdf.ln(10) # Line break
+    
+#     # Add Feedback Text
+#     pdf.set_font("Arial", size=12)
+#     # Multi_cell handles text wrapping automatically
+#     pdf.multi_cell(0, 10, txt=clean) 
+    
+#     # Output as string of bytes for Streamlit to download
+#     return pdf.output(dest='S').encode('latin-1')
 def clean_text(text):
-    return text.replace("—", "-").replace("’", "'")
+    return (
+        text
+        .replace("—", "-")
+        .replace("–", "-")
+        .replace("’", "'")
+        .replace("“", '"')
+        .replace("”", '"')
+        .replace("•", "-")
+    )
+
+
 def create_pdf(feedback_text):
+
     clean = clean_text(feedback_text)
+
     pdf = FPDF()
+
     pdf.add_page()
-    pdf.set_font("Arial", size=12)
 
-    pdf_bytes = pdf.output(dest='S').encode('latin-1', errors='replace')
-    
-    # Add Title
-    pdf.set_font("Arial", 'B', 16)
-    pdf.cell(200, 10, txt="Job Market Analysis Report", ln=True, align='C')
-    pdf.ln(10) # Line break
-    
-    # Add Feedback Text
-    pdf.set_font("Arial", size=12)
-    # Multi_cell handles text wrapping automatically
-    pdf.multi_cell(0, 10, txt=clean) 
-    
-    # Output as string of bytes for Streamlit to download
-    return pdf.output(dest='S').encode('latin-1')
+    pdf.set_font("Arial", "B", 16)
 
+    pdf.cell(
+        0,
+        10,
+        "Job Market Analysis Report",
+        ln=True,
+        align="C"
+    )
+
+    pdf.ln(10)
+
+    pdf.set_font("Arial", size=11)
+
+    pdf.multi_cell(
+        0,
+        8,
+        clean
+    )
+
+    return pdf.output(dest="S").encode("latin-1", errors="replace")
 # ---------------------------------------------------------
 # 2. THE STREAMLIT UI
 # ---------------------------------------------------------
@@ -47,7 +87,7 @@ experience = st.number_input(
     value=1,
     step=1
 )
-current_skills = st.text_area("Your Current Skills", placeholder="e.g., Python, Playwright, Automation Testing")
+current_skills = st.text_area("Your Current Skills", placeholder="e.g., Python, Playwright, AWS")
 job_query = st.text_input("Target Role", placeholder="e.g., Full Stack Developer")
 
 # The Action Button
